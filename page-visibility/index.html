@@ -1,17 +1,97 @@
 <!doctype html>
-
 <html lang="en">
-<head>
-  <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+		<link id="favicon" rel="icon" href="favicon.ico" type="image/x-icon">
 
-  <title>HTML5 API Experiments</title>
+    <title>HTML5 API Experiments: Page Visibility</title>
 
-  <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
-</head>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
 
-<body>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-</body>
+    <style>
+    	body {
+    		background-color: #AAA;
+    	}
+    	.container {
+    		max-width: 720px;
+    	}
+  	</style>
+
+	</head>
+
+  <body>
+
+    <main role="main" class="container">
+
+    	<div class="alert alert-primary mt-3" role="alert">
+			  Move away from this window/tab to pause the video
+			</div>
+
+    	<div class="embed-responsive embed-responsive-16by9">
+  			<video id="videoElement" controls loop>
+				  <source src="bigbuckbunny_60seconds.mp4" type="video/mp4">
+				  Your browser does not support HTML5 video.
+				</video>
+			</div>
+
+			<div class="card mt-4 mb-5">
+			  <div class="card-body">
+			    <h4 class="card-title">Page Visibility</h4>
+			    <h6 class="card-subtitle mb-2 text-muted">HTML5 API Experiments</h6>
+			    <p class="card-text">Using the Page Visibility API we can programmatically determine the visibility of the document. This presents a number of potential resource efficiencies.</p>
+			    <p class="card-text">In this example, the video will automatically pause if you move away from the tab/window. This will improve the user experience and optimize CPU and power efficiency of the application.</p>
+			    <p class="card-text">Let's take a look at the code:</p>
+<pre><code>var videoElement = document.getElementById("videoElement");
+function handleVisibilityChange() {
+  if (document.visibilityState == "hidden") {
+    videoElement.pause();
+  }
+}
+document.addEventListener('visibilitychange', handleVisibilityChange, false);
+</code></pre>
+
+
+			    <a href="https://w3c.github.io/page-visibility/" target="_blank" class="card-link">W3C Specification</a>
+			    <a href="https://github.com/ymdahi/html5-api-experiments" target="_blank" class="card-link">This project on GitHub</a>
+			  </div>
+			</div>
+
+
+    </main><!-- /main .container -->
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+		<script type="text/javascript">
+			var videoElement = document.getElementById("videoElement");
+			var videoPausedAt;
+			function handleVisibilityChange() {
+			  if (document.visibilityState == "hidden") {
+			    videoElement.pause();
+			    videoPausedAt = (Math.round(videoElement.currentTime * 100) / 100) + 's';
+			    $('.alert').text('Video paused at ' + videoPausedAt + ' because you left this window.');
+			    $('.alert').removeClass('alert-primary').addClass('alert-warning');
+			    $('#favicon').attr("href","pause.ico");
+			    console.log('Video paused @ ' + videoPausedAt);
+			  }
+			}
+	    videoElement.addEventListener('playing', function(){
+	    	$('#favicon').attr("href","play.ico");
+	    })
+	    videoElement.addEventListener('pause', function(){
+	    	$('#favicon').attr("href","pause.ico");
+	    })
+
+			document.addEventListener('visibilitychange', handleVisibilityChange, false);
+
+		</script>
+  </body>
 </html>
