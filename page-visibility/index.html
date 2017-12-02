@@ -15,17 +15,16 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <style>
-    	body {
-    		background-color: #AAA;
-    	}
+
     	.container {
     		max-width: 720px;
     	}
+
   	</style>
 
 	</head>
 
-  <body>
+  <body class="bg-light">
 
     <main role="main" class="container">
 
@@ -43,7 +42,7 @@
 			<div class="card mt-4 mb-5">
 			  <div class="card-body">
 			    <h4 class="card-title">Page Visibility</h4>
-			    <h6 class="card-subtitle mb-2 text-muted">HTML5 API Experiments</h6>
+			    <h6 class="card-subtitle mb-4 text-muted">HTML5 API Experiments</h6>
 			    <p class="card-text">Using the Page Visibility API we can programmatically determine the visibility of the document. This presents a number of potential resource efficiencies.</p>
 			    <p class="card-text">In this example, the video will automatically pause if you move away from the tab/window. This will improve the user experience and optimize CPU and power efficiency of the application.</p>
 			    <p>You'll also notice the favicon change when the user moves away from the document.</p>
@@ -58,15 +57,21 @@ document.addEventListener('visibilitychange', handleVisibilityChange, false);
 </code></pre>
 
 					<p>This API is fairly straight-forward: we add an event listener that listens for the event 'visibilitychange' and, in our case, runs a function called that manages the video playback.</p>
-			    <a href="https://w3c.github.io/page-visibility/" target="_blank" class="card-link">W3C Specification</a>
-			    <a href="https://github.com/ymdahi/html5-api-experiments" target="_blank" class="card-link">This project on GitHub</a>
-			    <a href="https://github.com/ymdahi" class="card-link">More Experiments</a>
+					<h5>Read on</h5>
+					<ul>
+						<li><a href="https://w3c.github.io/page-visibility/" target="_blank">W3C Specification</a></li>
+						<li><a href="https://caniuse.com/#feat=pagevisibility" target="_blank">Can I Use It? Browser Support</a></li>
+						<li><a href="https://github.com/ymdahi/html5-api-experiments" target="_blank">This project on GitHub</a></li>
+						<li><a href="https://github.com/ymdahi">More Experiments</a></li>
 			  </div>
 			</div>
 
 
     </main><!-- /main .container -->
 
+    <footer>
+    	<p class="p-2 text-center text-secondary"><a href="ymdahi.github.io">ymdahi's devlog</a>. All content on this site is licensed under <a href="https://creativecommons.org/licenses/by/3.0/deed" target="_blank">CC BY 3.0</a></p>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>

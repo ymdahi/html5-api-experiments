@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+		<link id="favicon" rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <title>HTML5 API Experiments: Online State</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <style>
+
+    	.container {
+    		max-width: 720px;
+    	}
+    	.offline-overlay {
+    		display: none;
+    		position: absolute;
+    		top: 0;
+    		left: 0;
+    		width: 100%;
+    		height: 100%;
+    		padding: 25% 25px 0;
+    		background-color: rgba(255,255,255,0.9);
+    		text-align: center;
+    	}
+    	.pulse {
+				animation-name: pulse_animation;
+				animation-duration: 2500ms;
+				transform-origin:70% 70%;
+				animation-iteration-count: infinite;
+				animation-timing-function: linear;
+			}
+    	@keyframes pulse_animation {
+				0% { transform: scale(1); }
+				50% { transform: scale(1.1); }
+				100% { transform: scale(1); }
+			}
+
+  	</style>
+
+		<script type="text/javascript">
+		window.onload = function () {
+
+			var dps = []; // dataPoints
+			var chart = new CanvasJS.Chart("chartContainer", {
+				title :{
+					text: "Real time data example"
+				},
+				axisY: {
+					includeZero: false
+				},      
+				data: [{
+					type: "line",
+					dataPoints: dps
+				}]
+			});
+
+			var xVal = 0;
+			var yVal = 100; 
+			var interval = null;
+			var updateInterval = 1000;
+			var dataLength = 20; // number of dataPoints visible at any point
+
+			var updateChart = function (count) {
+
+				count = count || 1;
+
+				for (var j = 0; j < count; j++) {
+					yVal = yVal +  Math.round(5 + Math.random() *(-5-5));
+					dps.push({
+						x: xVal,
+						y: yVal
+					});
+					xVal++;
+				}
+
+				if (dps.length > dataLength) {
+					dps.shift();
+				}
+
+				chart.render();
+			};
+
+			updateChart(dataLength);
+			interval = setInterval(updateChart,1000);
+
+		  function statusOnline(event) {
+				$('.offline-overlay img').attr('src','checkmark.png');
+				$('.offline-overlay .statusMessage').text('Back online!');
+				setTimeout(function(){
+					$('.offline-overlay').toggle();
+					interval = setInterval(updateChart,1000);	
+				},1500);
+				console.log('Online, resuming updates');
+		  }
+
+		  function statusOffline(event) {
+		  	clearInterval(interval);
+		  	$('.offline-overlay img').attr('src','offline.png');
+				$('.offline-overlay .statusMessage').text('You are currently offline');
+		  	$('.offline-overlay').toggle();
+		  	console.log('Offline, updates are paused');
+		  }
+
+		  window.addEventListener('online',  statusOnline);
+		  window.addEventListener('offline', statusOffline);
+
+		}
+
+		</script>
+
+	</head>
+
+  <body class="bg-light">
+
+    <main role="main" class="container">
+
+    	<div class="alert alert-primary mt-3" role="alert">
+			  <i class="fa fa-wifi" aria-hidden="true"></i> Turn off/Disable your internet connection to see what happens
+			</div>
+
+			<div class="card mt-4">
+    		<div class="card-body">
+    			<div id="chartContainer" style="height: 400px;"></div>
+    			<div class="offline-overlay">
+    				<img class="pulse" src="offline.png"/>
+    				<p class="statusMessage">You are currently offline</p>
+    			</div>
+    		</div>
+    	</div>
+
+			<div class="card mt-4 mb-5">
+			  <div class="card-body">
+			    <h4 class="card-title">Online State</h4>
+			    <h6 class="card-subtitle mb-4 text-muted">HTML5 API Experiments</h6>
+
+					
+
+			    <p class="card-text">You can now add listeners for the offline/online status of the user. This API could be useful in applications that use real time data or offline-enabled applications. For example, you could save user input locally until the user is back online. Or you can simply display notifications that let the user know they are offline. </p>
+			    <p class="card-text">In this example, I have a simulated real time data feed. This data can be temperature from a sensor, stock prices, etc. When the user is disconnected from the internet, the data feed is paused and the user is notified that their disconnected.</p>
+			    <p>The data feed is automatically resumed once the user reconnects.</p>
+			    <p class="card-text">Let's take a look at the code:</p>
+<pre><code># add listeners for both online and offline
+window.addEventListener('online',  statusOnline);
+window.addEventListener('offline', statusOffline);
+
+# react to online status
+function statusOnline(event) {
+  $('.offline-overlay img').attr('src','checkmark.png');
+  $('.offline-overlay .statusMessage').text('Back online!');
+  setTimeout(function(){
+    $('.offline-overlay').toggle();
+    interval = setInterval(updateChart,1000);	
+  },1500);
+  console.log('Online, resuming updates');
+}
+
+# react to offline status
+function statusOffline(event) {
+  clearInterval(interval);
+  $('.offline-overlay img').attr('src','offline.png');
+  $('.offline-overlay .statusMessage').text('You are currently offline');
+  $('.offline-overlay').toggle();
+  console.log('Offline, updates are paused');
+}
+</code></pre>
+
+
+					<h5>Read on</h5>
+					<ul>
+						<li><a href="https://html.spec.whatwg.org/multipage/offline.html#browser-state" target="_blank">W3C Specification</a></li>
+						<li><a href="https://caniuse.com/#feat=online-status" target="_blank">Can I Use It? Browser Support</a></li>
+						<li><a href="https://github.com/ymdahi/html5-api-experiments" target="_blank">This project on GitHub</a></li>
+						<li><a href="https://github.com/ymdahi">More Experiments</a></li>
+			  </div>
+			</div>
+
+
+    </main><!-- /main .container -->
+
+    <footer>
+    	<p class="p-2 text-center text-secondary"><a href="ymdahi.github.io">ymdahi's devlog</a>. All content on this site is licensed under <a href="https://creativecommons.org/licenses/by/3.0/deed" target="_blank">CC BY 3.0</a></p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+		<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+  </body>
+</html>
