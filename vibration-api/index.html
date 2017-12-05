@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+		<link id="favicon" rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <title>HTML5 API Experiments: Vibration API</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <style>
+
+    	.container {
+    		max-width: 720px;
+    	}
+    	.offline-overlay {
+    		display: none;
+    		position: absolute;
+    		top: 0;
+    		left: 0;
+    		width: 100%;
+    		height: 100%;
+    		padding: 25% 25px 0;
+    		background-color: rgba(255,255,255,0.9);
+    		text-align: center;
+    	}
+    	.pulse {
+				animation-name: pulse_animation;
+				animation-duration: 2500ms;
+				transform-origin:70% 70%;
+				animation-iteration-count: infinite;
+				animation-timing-function: linear;
+			}
+    	@keyframes pulse_animation {
+				0% { transform: scale(1); }
+				50% { transform: scale(1.1); }
+				100% { transform: scale(1); }
+			}
+
+  	</style>
+
+	</head>
+
+  <body class="bg-light">
+
+    <main role="main" class="container">
+
+    	<div class="alert alert-primary mt-3" role="alert">
+			  <i class="fa fa-mobile" aria-hidden="true"></i> Works best on mobile/tablet
+			</div>
+
+			<div class="card mt-4">
+    		<div class="card-body">
+    			<h6 class="card-subtitle text-muted">Vibrate once</h6>
+    			<pre><code>
+# vibrate once for 500ms
+navigator.vibrate([500]);</code></pre>
+    			<button class="btn btn-primary" onclick="vibrateOnce()">Vibrate Once</button>
+    		</div>
+    	</div>
+
+    	<div class="card mt-4">
+    		<div class="card-body">
+    			<h6 class="card-subtitle text-muted">Vibrate Pattern</h6>
+    			<pre><code>
+// Values at even indices specify vibrations, while the odd indices specify pauses.
+// Vibrate for 500ms 6 times, pausing for 250ms in between each one.
+navigator.vibrate([500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500]);</code></pre>
+    			<button class="btn btn-primary" onclick="vibratePattern()">Vibrate Pattern</button>
+    		</div>
+    	</div>
+
+    	<div class="card mt-4">
+    		<div class="card-body">
+    			<h6 class="card-subtitle text-muted">Vibrate on form error</h6>
+    			<form class="form-1">
+  					<div class="form-group">
+<pre><code>
+// Vibrate for 1 second on form submit
+function formVibrate(){
+  navigator.vibrate(1000);
+}
+</code></pre>
+  						<input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+  					</div>
+  					<button type="submit" onclick="formVibrate()" class="btn btn-primary">Submit</button>
+  				</form>
+
+    		</div>
+    	</div>
+
+			<div class="card mt-4 mb-5">
+			  <div class="card-body">
+			    <h4 class="card-title">Vibration API</h4>
+			    <h6 class="card-subtitle mb-4 text-muted">HTML5 API Experiments</h6>
+
+			    <p class="card-text">The Vibration API enables developers to provide users with tactile feedback. It's very simple to use: simply provide the function with a pattern in an array like so:</p>
+<pre><code># even indices are the length of vibration
+# odd indices specify the pause length
+# in the example below, the pattern will be:
+# vibrate for 500ms, pause for 50ms, vibrate for 500ms,
+pause for 50ms, vibrate for 500ms
+navigator.vibrate([500, 50, 500, 50, 500]);
+</code></pre>
+					<hr>
+					<p><strong>Create your own:</strong></p>
+					
+					<form class="form-2 mb-5">
+						<div class="form-group">
+							<input type="text" class="form-control" id="createPattern" value="500,50,500,50,500" aria-describedby="emailHelp">
+							<small id="emailHelp" class="form-text text-muted">Enter a set of comma-separated values that represent time in milliseconds.</small>
+						</div>
+						<button class="btn btn-primary" type="submit" onclick="playbackPattern()">Playback pattern</button>
+					</form>
+
+					<h5>Read on</h5>
+					<ul>
+						<li><a href="https://www.w3.org/TR/vibration/" target="_blank">W3C Specification</a></li>
+						<li><a href="https://caniuse.com/#feat=vibration" target="_blank">Can I Use It? Browser Support</a></li>
+						<li><a href="https://github.com/ymdahi/html5-api-experiments" target="_blank">This project on GitHub</a></li>
+						<li><a href="https://github.com/ymdahi">More Experiments</a></li>
+					</ul>
+			  </div>
+			</div>
+
+
+    </main><!-- /main .container -->
+
+    <footer>
+    	<p class="p-2 text-center text-secondary"><a href="ymdahi.github.io">ymdahi's devlog</a>. All content on this site is licensed under <a href="https://creativecommons.org/licenses/by/3.0/deed" target="_blank">CC BY 3.0</a></p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+		<script type="text/javascript">
+			function vibrateOnce() {
+				navigator.vibrate([500]);
+			}
+
+			function vibratePattern() {
+				navigator.vibrate([500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500]);
+			}
+
+			function formVibrate() {
+				navigator.vibrate([1000]);
+			}
+
+			function playbackPattern(){
+				if ( $('#createPattern').val() ) {
+					var patternInput = $('#createPattern').val();
+					navigator.vibrate(patternInput);
+				} else {
+					console.log('Error');
+				}
+			}
+		</script>
+
+  </body>
+</html>

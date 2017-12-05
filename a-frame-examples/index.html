@@ -25,15 +25,20 @@
 	</head>
 
   <body >
+<!-- Chun(https://sketchfab.com/models/97d25d1aeef34b8ab5eab5b7396bc9d0) by CODAME(https://sketchfab.com/codame) is licensed under CC Attribution(http://creativecommons.org/licenses/by/4.0/)-->
 
-    			<a-scene>
+    			<a-scene stats>
+
     <a-assets>
         <a-asset-item id="why-male-models" src="man/man.dae"></a-asset-item>
+        <a-asset-item id="figure-model" src="man/model_mesh.dae"></a-asset-item>
+        <a-asset-item id="chun-obj" src="chun-model/model_mesh.obj"></a-asset-item>
+    		<a-asset-item id="chun-mtl" src="chun-model/model_mesh.obj.mtl"></a-asset-item>
         <img id="fall" src="fall.png">
         <img id="goggles" src="goggles.png">
-        <img id="mozvr" src="../../assets/img/mozvr.png">
+        <!--<img id="mozvr" src="../../assets/img/mozvr.png">-->
         <img id="price" src="price.png">
-        <img id="shadow2" src="../../assets/img/radial-shadow-2.png">
+        <!--<img id="shadow2" src="../../assets/img/radial-shadow-2.png">-->
         <img id="shoes" src="shoes.png">
       </a-assets>
 
@@ -42,10 +47,9 @@
                      easing="linear" repeat="indefinite"></a-animation>
         <a-collada-model position="-.35 0 .55" rotation="0 -20 0" scale="1.5 1.5 1.5"
                          src="#why-male-models"></a-collada-model>
-        <a-image src="#shadow2" rotation="-90 0 0" scale="0.5 0.5 0.5"></a-image>
+        <!--<a-image src="#shadow2" rotation="-90 0 0" scale="0.5 0.5 0.5"></a-image>-->
       </a-entity>
-
-      
+      <a-obj-model position="0 1 0" src="#chun-obj" mtl="#chun-mtl" scale="1 1 1"></a-obj-model>
 
       <a-image id="price" src="#price" width="7" height="3.5" scale="0.2 0.2 0.2">
         <a-animation attribute="position" from="0 2.8 -6" to="2.25 2.8 -6" delay="1000"
