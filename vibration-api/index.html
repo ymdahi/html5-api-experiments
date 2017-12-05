@@ -164,8 +164,8 @@ navigator.vibrate([500, 50, 500, 50, 500]);
 			function playbackPattern(){
 				if ( $('#createPattern').val() ) {
 					var patternInput = $('#createPattern').val().split(",");
-					navigator.vibrate([patternInput]);
-					console.log([patternInput]);
+					navigator.vibrate(patternInput);
+					console.log(patternInput);
 				} else {
 					console.log('Error');
 				}
