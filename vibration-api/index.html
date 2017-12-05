@@ -141,22 +141,31 @@ navigator.vibrate([500, 50, 500, 50, 500]);
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
 
 		<script type="text/javascript">
+			$(document).on("submit", "form", function(e){
+		    e.preventDefault();
+		    return false;
+			});
+			
 			function vibrateOnce() {
 				navigator.vibrate([500]);
+				console.log('Vibrate for 500ms');
 			}
 
 			function vibratePattern() {
 				navigator.vibrate([500, 250, 500, 250, 500, 250, 500, 250, 500, 250, 500]);
+				console.log('Vibrate for 500ms 6 times with a 250ms pause inbetween');
 			}
 
 			function formVibrate() {
 				navigator.vibrate([1000]);
+				console.log('Vibrate for 1000ms');
 			}
 
 			function playbackPattern(){
 				if ( $('#createPattern').val() ) {
 					var patternInput = $('#createPattern').val();
 					navigator.vibrate(patternInput);
+					console.log(patternInput);
 				} else {
 					console.log('Error');
 				}
