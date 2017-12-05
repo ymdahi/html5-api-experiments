@@ -145,7 +145,7 @@ navigator.vibrate([500, 50, 500, 50, 500]);
 		    e.preventDefault();
 		    return false;
 			});
-			
+
 			function vibrateOnce() {
 				navigator.vibrate([500]);
 				console.log('Vibrate for 500ms');
@@ -164,7 +164,7 @@ navigator.vibrate([500, 50, 500, 50, 500]);
 			function playbackPattern(){
 				if ( $('#createPattern').val() ) {
 					var patternInput = $('#createPattern').val();
-					navigator.vibrate(patternInput);
+					navigator.vibrate([patternInput]);
 					console.log(patternInput);
 				} else {
 					console.log('Error');
